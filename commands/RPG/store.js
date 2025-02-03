@@ -1,4 +1,4 @@
-const store = require("../classes/store");
+const store = require("../../classes/store");
 
 module.exports = {
     name: "store",

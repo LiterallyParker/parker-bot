@@ -15,10 +15,16 @@ const client = new Client({
 
 client.commands = new Map();
 
-const commandFiles = fs.readdirSync(path.join(__dirname, 'commands')).filter(file => file.endsWith('.js'));
-for (const file of commandFiles) {
-    const command = require(path.join(__dirname, 'commands', file));
-    client.commands.set(command.name, command);
+const commandFolders = fs.readdirSync(path.join(__dirname, 'commands'));
+for (const folder of commandFolders) {
+    const folderPath = path.join(__dirname, 'commands', folder);
+    if (fs.statSync(folderPath).isDirectory()) {
+        const commandFiles = fs.readdirSync(folderPath).filter(file => file.endsWith('.js'));
+        for (const file of commandFiles) {
+            const command = require(path.join(folderPath, file));
+            client.commands.set(command.name, command);
+        }
+    }
 };
 
 client.once('ready', async () => {

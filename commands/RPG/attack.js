@@ -1,4 +1,4 @@
-const { Stats } = require("../models");
+const { Stats } = require("../../models");
 
 module.exports = {
     name: "attack",

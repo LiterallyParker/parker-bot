@@ -1,4 +1,4 @@
-const { getQueue, playNextSong } = require('../util/musicQueue');
+const { getQueue, playNextSong } = require('../../util/musicQueue');
 
 module.exports = {
     name: 'play',

@@ -1,5 +1,5 @@
-const { Stats, User } = require("../models");
-const { getStats } = require("../services");
+const { Stats, User } = require("../../models");
+const { getStats } = require("../../services");
 
 module.exports = {
     name: "stats",

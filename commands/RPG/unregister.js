@@ -1,4 +1,4 @@
-const { User, Stats } = require("../models");
+const { User, Stats } = require("../../models");
 
 module.exports = {
     name: "unregister",

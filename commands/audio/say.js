@@ -1,7 +1,7 @@
 const { joinVoiceChannel, createAudioPlayer, createAudioResource, AudioPlayerStatus, VoiceConnectionStatus, entersState } = require("@discordjs/voice");
 const { exec } = require("child_process");
 const fs = require("fs");
-const { getQueue } = require("../util/musicQueue");
+const { getQueue } = require("../../util/musicQueue");
 
 module.exports = {
     name: "say",
