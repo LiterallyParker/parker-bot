@@ -1,7 +1,6 @@
 const { Client, GatewayIntentBits } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
-const db = require("./models");
 require('dotenv').config();
 
 const client = new Client({
@@ -42,13 +41,8 @@ client.on('messageCreate', (message) => {
     };
 });
 
-require("./schedule/taskRegistry");
-
-db.sequelize.sync();
-
 const shutdown = async () => {
     console.log("\nShutting down bot...");
-    await db.sequelize.close(); // Close DB connection
     client.destroy(); // Properly close Discord client
     process.exit(0); // Exit process
 };
