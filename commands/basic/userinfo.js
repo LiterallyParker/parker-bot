@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -13,13 +13,17 @@ module.exports = {
         const target = interaction.options.getUser('target') || interaction.user;
         const member = interaction.guild.members.cache.get(target.id);
 
-        const responses = [
-            `**Username: **\n    ${target.username}`,
-            `**Global Name: **\n    ${target.globalName || "None"}`,
-            `**Server Nickname: **\n    ${member?.nickname || "None"}`,
-            `**Profile image: **${target.displayAvatarURL()}`,
-        ];
+        const embed = new EmbedBuilder()
+            .setColor('#5865f2')
+            .setTitle(`__User Info__`)
+            .setThumbnail(target.displayAvatarURL())
+            .addFields(
+                { name: '**Username**', value: target.username, inline: true },
+                { name: '**Global Name**', value: target.globalName || 'None', inline: true },
+                { name: '**Server Nickname**', value: member?.nickname || 'None', inline: true }
+            )
+            .setFooter({ text: `Requested by ${interaction.user.tag}` });
 
-        await interaction.reply(responses.join("\n\n"));
+        await interaction.reply({ embeds: [embed] });
     }
 };
