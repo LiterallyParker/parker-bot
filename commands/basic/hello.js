@@ -1,7 +1,10 @@
+const { SlashCommandBuilder } = require("discord.js");
+
 module.exports = {
-    name: "hello",
-    description: "Does the basic bot greeting.",
-    async execute(message) {
+    data: new SlashCommandBuilder()
+        .setName('hello')
+        .setDescription('Does the basic bot greeting.'),
+    async execute(interaction) {
         const greetings = [
             "Hello!", "Hi!", "Hey!", "Greetings!", "Salutations!", 
             "Howdy!", "Yo!", "What's up?", "Good day!", "Bonjour!", 
@@ -12,6 +15,6 @@ module.exports = {
           ];
 
         const randGreeting = greetings[Math.floor(Math.random() * greetings.length)];
-        message.reply(randGreeting);
+        interaction.reply(randGreeting);
     }
 };

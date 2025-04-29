@@ -1,7 +1,10 @@
+const { SlashCommandBuilder } = require("discord.js");
+
 module.exports = {
-    name: "goodbye",
-    description: "Does the basic bot goodbye.",
-    async execute(message) {
+    data: new SlashCommandBuilder()
+        .setName('goodbye')
+        .setDescription('Does the basic bot goodbye.'),
+    async execute(interaction) {
         const farewells = [
             "Goodbye!", "See you later!", "Farewell!", "Take care!", "Bye-bye!", 
             "Adios!", "Ciao!", "Au revoir!", "Sayonara!", "Auf Wiedersehen!", 
@@ -12,6 +15,6 @@ module.exports = {
         ];
 
         const randomFarewell = farewells[Math.floor(Math.random() * farewells.length)];
-        message.reply(randomFarewell);
+        interaction.reply(randomFarewell);
     }
 };
