@@ -17,6 +17,7 @@ module.exports = {
             '🎮': 'Gaming',
             '💻': 'Programming',
             '🤖': 'Bot User',
+            '🧑‍🦼': 'Aiden\'s Memes',
         },
     },
     countries: {

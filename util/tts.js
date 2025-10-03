@@ -14,7 +14,7 @@ const elevenlabs = new ElevenLabsClient({
 
 async function generateSpeech(text) {
     const stream = await elevenlabs.textToSpeech.convert(
-        'MKlLqCItoCkvdhrxgtLv',
+        'dhwafD61uVd8h85wAZSE',
         {
             text,
             voiceSettings: {
