@@ -1,85 +1,70 @@
-const { Client, GatewayIntentBits, Collection, REST, Routes, Events } = require('discord.js');
+const { Client, GatewayIntentBits, Collection, Events, Partials } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 require('dotenv').config();
+
+if (!process.env.DISCORD_TOKEN) {
+    console.error("Missing DISCORD_TOKEN in .env file");
+    process.exit(1);
+}
 
 const client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildMessages,
         GatewayIntentBits.MessageContent,
+        GatewayIntentBits.GuildMembers,
         GatewayIntentBits.GuildVoiceStates,
-    ]
+        GatewayIntentBits.GuildMessageReactions
+    ],
+    partials: [Partials.Message, Partials.Channel, Partials.Reaction, Partials.User, Partials.GuildMember]
 });
 
-client.commands = new Collection();
 
+// --- Load commands locally ---
+client.commands = new Collection();
 const commandFolders = fs.readdirSync(path.join(__dirname, 'commands'));
-const commands = [];
 
 for (const folder of commandFolders) {
     const folderPath = path.join(__dirname, 'commands', folder);
-    if (fs.statSync(folderPath).isDirectory()) {
-        const commandFiles = fs.readdirSync(folderPath).filter(file => file.endsWith('.js'));
-        for (const file of commandFiles) {
-            const command = require(path.join(folderPath, file));
-            if (command.data && command.execute) {
-                client.commands.set(command.data.name, command);
-                commands.push(command.data);
-            }
+    if (!fs.statSync(folderPath).isDirectory()) continue;
+
+    const commandFiles = fs.readdirSync(folderPath).filter(file => file.endsWith('.js'));
+    for (const file of commandFiles) {
+        const filePath = path.join(folderPath, file);
+        let command;
+        try {
+            delete require.cache[require.resolve(filePath)];
+            command = require(filePath);
+        } catch (error) {
+            console.error(`Error loading command "${file}":`, error);
+            continue;
         }
+
+        if (!command.data || !command.execute) {
+            console.warn(`Command ${filePath} missing data/execute. Skipping.`);
+            continue;
+        }
+
+        client.commands.set(command.data.name, command);
     }
 };
 
-client.once('ready', async () => {
-    console.log(`Bot is online as ${client.user.tag}`);
-
-    const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
-    try {
-        console.log('Refreshing application (/) commands...');
-
-        await rest.put(
-            Routes.applicationGuildCommands(client.user.id, '1270226761447247974'),
-            { body: commands }
-        );
-
-        console.log('Successfully reloaded application (/) commands.');
-    } catch (error) {
-        console.error(error);
-    };
-});
-
-client.on(Events.InteractionCreate, async interaction => {
-    if (interaction.isCommand()) {
-        const command = client.commands.get(interaction.commandName);
-    
-        if (!command) return;
-    
-        try {
-            await command.execute(interaction);
-        } catch (error) {
-            console.error(error);
-            await interaction.reply({ content: 'There was an error executing this command.', ephemeral: true });
-        };
-    };
-
-    if (interaction.isButton()) {
-        if (interaction.customId === 'button_hello') {
-            await interaction.reply('Hello!');
+// -- Load events locally ---
+const eventsPath = path.join(__dirname, 'events');
+for (const folder of fs.readdirSync(eventsPath)) {
+    const folderPath = path.join(eventsPath, folder);
+    for (const file of fs.readdirSync(folderPath).filter(file => file.endsWith('.js'))) {
+        const event = require(path.join(folderPath, file));
+        if (event.once) {
+            client.once(event.name, (...args) => event.execute(...args, client));
+            continue;
         }
-        if (interaction.customId === 'button_goodbye') {
-            await interaction.reply('Goodbye!');
-        }
+        client.on(event.name, (...args) => event.execute(...args, client));
     }
-});
+};
 
-client.on('guildMemberAdd', (member) => {
-    const channel = member.guild.systemChannel;
-    if (channel) {
-        channel.send(`WELCOME TO THE SERVER ${member.user.username.toUpperCase()}!`);
-    }
-});
- 
+// --- Graceful shutdown ---
 const shutdown = async () => {
     console.log("\nShutting down bot...");
     client.destroy();
@@ -92,5 +77,10 @@ process.on('uncaughtException', (err) => {
     console.error("Uncaught Exception:", err);
     shutdown();
 });
+process.on('unhandledRejection', (reason, promise) => {
+    console.error("Unhandled Rejection at:", promise, "reason:", reason);
+    shutdown();
+});
 
+// --- Login ---
 client.login(process.env.DISCORD_TOKEN);
