@@ -15,7 +15,7 @@ module.exports = {
         const member = await guild.members.fetch(user.id);
 
         for (const cat of Object.values(reactionRoles)) {
-            if (reaction.message.id !== cat.messageId) continue;
+            if (cat.messageId && reaction.message.id !== cat.messageId) continue;
 
             const roleName = cat.emojis[emoji];
             if (!roleName) continue; // Skip if emoji isn't mapped

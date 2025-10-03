@@ -1,6 +1,5 @@
 module.exports = {
     pronouns: {
-        messageId: null, // set when creating the message
         singleChoice: true,
         emojis: {
             '👨': 'He/Him',
@@ -9,7 +8,6 @@ module.exports = {
         },
     },
     interests: {
-        messageId: null,
         singleChoice: false,
         emojis: {
             '🎨': 'Art',
@@ -17,11 +15,9 @@ module.exports = {
             '🎮': 'Gaming',
             '💻': 'Programming',
             '🤖': 'Bot User',
-            '🧑‍🦼': 'Aiden\'s Memes',
         },
     },
     countries: {
-        messageId: null,
         singleChoice: true,
         emojis: {
             '🇺🇸': 'USA',

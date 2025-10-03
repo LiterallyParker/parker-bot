@@ -1,6 +1,6 @@
 const { Events } = require('discord.js');
 const { reactionRoles } = require('../../config');
-const { assignRole, fetchMember, fetchRole } = require('../../discord/utils');
+const { assignRole, fetchRole } = require('../../discord/roles');
 const { handleSingleChoice } = require('../../util/roleReactions');
 
 module.exports = {
@@ -18,7 +18,7 @@ module.exports = {
         const member = await fetchMember(reaction, user);
 
         for (const cat of Object.values(reactionRoles)) {
-            if (reaction.message.id !== cat.messageId) continue;
+            if (cat.messageId && reaction.message.id !== cat.messageId) continue;
 
             const roleName = cat.emojis[emoji];
             if (!roleName) continue;
