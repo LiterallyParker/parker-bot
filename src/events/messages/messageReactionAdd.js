@@ -1,5 +1,5 @@
 const { Events } = require('discord.js');
-const { reactionRoles } = require('../../config');
+const { reactionRoles } = require('../../../config');
 const { assignRole, fetchRole } = require('../../discord/roles');
 const { handleSingleChoice } = require('../../util/roleReactions');
 

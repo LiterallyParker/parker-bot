@@ -20,38 +20,32 @@ const client = new Client({
     partials: [Partials.Message, Partials.Channel, Partials.Reaction, Partials.User, Partials.GuildMember]
 });
 
-
 // --- Load commands locally ---
 client.commands = new Collection();
-const commandFolders = fs.readdirSync(path.join(__dirname, 'commands'));
+const commandsPath = path.join(__dirname, 'src', 'commands');
+const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
 
-for (const folder of commandFolders) {
-    const folderPath = path.join(__dirname, 'commands', folder);
-    if (!fs.statSync(folderPath).isDirectory()) continue;
-
-    const commandFiles = fs.readdirSync(folderPath).filter(file => file.endsWith('.js'));
-    for (const file of commandFiles) {
-        const filePath = path.join(folderPath, file);
-        let command;
-        try {
-            delete require.cache[require.resolve(filePath)];
-            command = require(filePath);
-        } catch (error) {
-            console.error(`Error loading command "${file}":`, error);
-            continue;
-        }
-
-        if (!command.data || !command.execute) {
-            console.warn(`Command ${filePath} missing data/execute. Skipping.`);
-            continue;
-        }
-
-        client.commands.set(command.data.name, command);
+for (const file of commandFiles) {
+    const filePath = path.join(commandsPath, file);
+    let command;
+    try {
+        delete require.cache[require.resolve(filePath)];
+        command = require(filePath);
+    } catch (error) {
+        console.error(`Error loading command "${file}":`, error);
+        continue;
     }
+
+    if (!command.data || !command.execute) {
+        console.warn(`Command ${filePath} missing data/execute. Skipping.`);
+        continue;
+    }
+
+    client.commands.set(command.data.name, command);
 };
 
 // -- Load events locally ---
-const eventsPath = path.join(__dirname, 'events');
+const eventsPath = path.join(__dirname, 'src', 'events');
 for (const folder of fs.readdirSync(eventsPath)) {
     const folderPath = path.join(eventsPath, folder);
     for (const file of fs.readdirSync(folderPath).filter(file => file.endsWith('.js'))) {

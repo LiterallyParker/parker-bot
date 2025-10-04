@@ -1,5 +1,5 @@
 const { createChannel } = require("../channels");
-const { channelsConfig } = require("../../config");
+const { channelsConfig } = require("../../../config");
 
 module.exports = async (guild) => {
     console.log('[Setup] Starting channel creation...');

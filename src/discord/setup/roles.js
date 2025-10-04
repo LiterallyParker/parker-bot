@@ -1,5 +1,5 @@
 const { createRole } = require('../roles');
-const { rolesConfig } = require("../../config")
+const { rolesConfig } = require("../../../config")
 
 module.exports = async (guild) => {
     console.log('[Setup] Starting role creation...');

@@ -32,7 +32,6 @@ module.exports = async (guild, {
         }
         return existingChannel;
     };
-
     // Create the channel
     try {
         const channel = await guild.channels.create({
@@ -43,11 +42,9 @@ module.exports = async (guild, {
             permissionOverwrites,
             reason,
         });
-
-        console.log(`[Setup] Created channel: #${name}`);
         return channel;
     } catch (error) {
-        console.error(`[Setup] Failed to create channel "${name}":`, error);
+        console.error(`Failed to create channel "${name}":`, error);
         throw error;
     }
 };

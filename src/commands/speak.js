@@ -6,7 +6,7 @@ const {
     AudioPlayerStatus,
 } = require('@discordjs/voice');
 const fs = require('fs');
-const { generateSpeech } = require('../../util/tts');
+const { generateSpeech } = require('../util/tts');
 let currentAudio = null;
 
 module.exports = {

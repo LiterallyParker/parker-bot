@@ -1,6 +1,4 @@
-const { fetchRole } = require("../roles");
-const { createChannel } = require("../channels");
-const { permissionsConfig } = require("../../config");
+const { permissionsConfig } = require("../../../config");
 
 module.exports = async (guild) => {
     console.log("[Setup] Starting permission assignment...");
