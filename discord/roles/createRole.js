@@ -1,4 +1,4 @@
-module.exports = async (guild, { name, color = 'DEFAULT', permissions = [] }) => {
+module.exports = async (guild, { name, color = 0, permissions = [] }) => {
     const existing = guild.roles.cache.find(r => r.name === name);
     if (existing) return existing;
 

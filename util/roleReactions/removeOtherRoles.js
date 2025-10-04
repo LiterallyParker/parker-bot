@@ -1,4 +1,4 @@
-const { removeRole } = require("../../discord/utils");
+const { removeRole } = require("../../discord/members/roles");
 
 module.exports = async (member, guild, cat, emoji) => {
     for (const otherEmoji of Object.keys(cat.emojis)) {

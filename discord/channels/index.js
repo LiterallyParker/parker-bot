@@ -1,4 +1,4 @@
 module.exports = {
-    createChannel: require('./channels/createChannel'),
-    fetchChannel: require('./channels/fetchChannel'),
+    createChannel: require('./createChannel'),
+    fetchChannel: require('./fetchChannel'),
 }

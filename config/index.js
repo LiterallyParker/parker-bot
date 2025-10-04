@@ -1,3 +1,5 @@
 module.exports = {
-    reactionRoles: require("./reactionRoles.js")
+    rolesConfig: require("./roles.js"),
+    channelsConfig: require("./channels.js"),
+    permissionsConfig: require("./permissions.js")
 }

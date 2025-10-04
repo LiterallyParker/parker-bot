@@ -1,8 +1,8 @@
-module.exports = async (guild, { 
-    name, 
+module.exports = async (guild, {
+    name,
     type = 0, // 0 = GUILD_TEXT, 2 = GUILD_VOICE, 4 = GUILD_CATEGORY
     parent = null,
-    topic = '', 
+    topic = '',
     permissionOverwrites = [],
     reason
 }) => {

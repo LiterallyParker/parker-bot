@@ -1,4 +1,4 @@
-const { removeReaction } = require('../../discord/utils');
+const { removeReaction } = require('../../discord/reactions');
 
 module.exports = async (fullMessage, cat, emoji, user) => {
     for (const otherEmoji of Object.keys(cat.emojis)) {
