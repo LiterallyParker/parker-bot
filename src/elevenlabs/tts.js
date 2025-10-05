@@ -1,19 +1,10 @@
 const fs = require('fs');
 const path = require('path');
-const { ElevenLabsClient } = require('@elevenlabs/elevenlabs-js');
-require('dotenv').config();
+const { createClient } = require('./client');
 
-if (!process.env.ELEVENLABS_API_KEY) {
-    console.error("Missing ELEVENLABS_API_KEY in .env file");
-    process.exit(1);
-};
-
-const elevenlabs = new ElevenLabsClient({
-    apiKey: process.env.ELEVENLABS_API_KEY
-});
-
-async function generateSpeech(text) {
-    const stream = await elevenlabs.textToSpeech.convert(
+async function textToStream(text) {
+    const client = createClient();
+    const stream = await client.textToSpeech.convert(
         'U1Vk2oyatMdYs096Ety7',
         {
             text,
@@ -27,11 +18,16 @@ async function generateSpeech(text) {
         }
     );
 
+    return stream;
+}
+
+async function generateSpeech(text) {
+    const stream = await textToStream(text);
+
     // ensure temp dir exists
     const tempDir = path.join(__dirname, '..', 'temp');
-    try { fs.mkdirSync(tempDir, { recursive: true }); } catch (e) { /* ignore mkdir race errors */ }
+    try { fs.mkdirSync(tempDir, { recursive: true }); } catch (e) { }
 
-    // use a small random suffix to reduce collision risk
     const fileName = `tts_${Date.now()}_${Math.random().toString(36).slice(2,8)}.mp3`;
     const filePath = path.join(tempDir, fileName);
     const writeStream = fs.createWriteStream(filePath);
@@ -48,12 +44,13 @@ async function generateSpeech(text) {
 
         return filePath;
     } catch (err) {
-        // cleanup partial file if it exists
-        try { if (fs.existsSync(filePath)) fs.unlinkSync(filePath); } catch (e) { /* ignore cleanup errors */ }
+        try { if (fs.existsSync(filePath)) fs.unlinkSync(filePath); } catch (e) { }
         throw err;
     }
 }
 
-module.exports = {
-    generateSpeech
+function cleanup(filePath) {
+    try { if (fs.existsSync(filePath)) fs.unlinkSync(filePath); } catch (e) { }
 }
+
+module.exports = { generateSpeech, cleanup, textToStream };

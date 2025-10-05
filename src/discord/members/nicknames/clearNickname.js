@@ -1,4 +1,4 @@
-const { setNickname } = require("./setNickname");
+const setNickname = require("./setNickname");
 
 module.exports = async (member) => {
     try {

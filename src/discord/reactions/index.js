@@ -1,5 +1,7 @@
 module.exports = {
     addReaction: require('./addReaction'),
     fetchMember: require('./fetchMember'),
-    removeReaction: require('./removeReaction'),
+    handleMultiChoice: require('./handleMultiChoice'),
+    handleSingleChoice: require('./handleSingleChoice'),
+    removeOtherReactions: require('./removeOtherReactions')
 }

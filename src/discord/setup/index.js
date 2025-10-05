@@ -1,6 +1,19 @@
 module.exports = async (guild) => {
-    try { await require('./roles')(guild); } catch (e) { console.error("Roles setup failed:", e) };
-    try { await require('./channels')(guild); } catch (e) { console.error("Channels setup failed:", e) };
-    try { await require('./permissions')(guild); } catch (e) { console.error("Permissions setup failed:", e) };
-    try { await require('./messages')(guild); } catch (e) { console.error("Messages setup failed:", e) };
+    const runIfFunction = async (modPath, label) => {
+        try {
+            const mod = require(modPath);
+            if (typeof mod === 'function') {
+                await mod(guild);
+            } else {
+                console.warn(`[Setup] ${label} module does not export a function, skipping.`);
+            }
+        } catch (e) {
+            console.error(`${label} setup failed:`, e);
+        }
+    };
+
+    await runIfFunction('./roles', 'Roles');
+    await runIfFunction('./channels', 'Channels');
+    await runIfFunction('./permissions', 'Permissions');
+    await runIfFunction('./messages', 'Messages');
 };

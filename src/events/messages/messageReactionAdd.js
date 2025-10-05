@@ -1,7 +1,9 @@
 const { Events } = require('discord.js');
 const { reactionRoles } = require('../../../config');
-const { assignRole, fetchRole } = require('../../discord/roles');
-const { handleSingleChoice } = require('../../util/roleReactions');
+const { assignRole } = require('../../discord/members/roles');
+const { fetchRole } = require('../../discord/roles');
+const { handleSingleChoice } = require('../../discord/reactions');
+const fetchMember = require('../../discord/reactions/fetchMember');
 
 module.exports = {
     name: Events.MessageReactionAdd,
@@ -15,14 +17,16 @@ module.exports = {
         // Check if the reaction is in the reactionRoles mapping
         const emoji = reaction.emoji.name;
         const guild = reaction.message.guild;
-        const member = await fetchMember(reaction, user);
+    const member = await fetchMember(reaction, user);
 
         for (const cat of Object.values(reactionRoles)) {
             if (cat.messageId && reaction.message.id !== cat.messageId) continue;
 
-            const roleName = cat.emojis[emoji];
-            if (!roleName) continue;
+            const mapped = cat.emojis && cat.emojis[emoji];
+            if (!mapped) continue;
 
+            // mapped may be a roleName or a config role id; if it's an id, resolve via cat.roleMap
+            const roleName = (cat.roleMap && cat.roleMap[mapped]) || mapped;
             const role = await fetchRole(guild, roleName);
 
             if (cat.singleChoice) {

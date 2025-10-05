@@ -3,8 +3,10 @@ const { permissionsConfig } = require("../../../config");
 module.exports = async (guild) => {
     console.log("[Setup] Starting permission assignment...");
 
+    const { fetchRole } = require('../roles');
+
     for (const [roleName, perms] of Object.entries(permissionsConfig)) {
-        const role = guild.roles.cache.find(r => r.name === roleName);
+        const role = await fetchRole(guild, roleName);
         if (!role) {
             console.warn(`[Setup] Role "${roleName}" not found, skipping.`);
             continue;

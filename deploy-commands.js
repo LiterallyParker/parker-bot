@@ -10,20 +10,28 @@ if (!process.env.DISCORD_TOKEN || !process.env.CLIENT_ID || !process.env.GUILD_I
 }
 
 const commands = [];
-const commandFolders = fs.readdirSync(path.join(__dirname, 'commands'));
+// commands are stored under src/commands in this repo
+const commandFolders = fs.readdirSync(path.join(__dirname, 'src', 'commands'));
 
 for (const folder of commandFolders) {
-    const folderPath = path.join(__dirname, 'commands', folder);
+    const folderPath = path.join(__dirname, 'src', 'commands', folder);
     if (!fs.statSync(folderPath).isDirectory()) continue;
 
     const commandFiles = fs.readdirSync(folderPath).filter(file => file.endsWith('.js'));
     for (const file of commandFiles) {
-        const command = require(path.join(folderPath, file));
-        if (command.data && command.execute) {
-            commands.push(command.data.toJSON ? command.data.toJSON() : command.data);
+        const commandPath = path.join(folderPath, file);
+        try {
+            const command = require(commandPath);
+            if (command && command.data && command.execute) {
+                commands.push(command.data.toJSON ? command.data.toJSON() : command.data);
+            } else {
+                console.warn(`Skipping invalid command (missing data/execute): ${commandPath}`);
+            }
+        } catch (err) {
+            console.error(`Failed to load command ${commandPath}:`, err);
         }
     }
-};
+}
 
 const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
 

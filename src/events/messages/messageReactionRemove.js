@@ -14,13 +14,16 @@ module.exports = {
         const guild = reaction.message.guild;
         const member = await guild.members.fetch(user.id);
 
-        for (const cat of Object.values(reactionRoles)) {
+    const { fetchRole } = require('../../discord/roles');
+
+    for (const cat of Object.values(reactionRoles)) {
             if (cat.messageId && reaction.message.id !== cat.messageId) continue;
 
-            const roleName = cat.emojis[emoji];
-            if (!roleName) continue; // Skip if emoji isn't mapped
+            const mapped = cat.emojis && cat.emojis[emoji];
+            if (!mapped) continue; // Skip if emoji isn't mapped
 
-            const role = guild.roles.cache.find(r => r.name === roleName);
+            const roleName = (cat.roleMap && cat.roleMap[mapped]) || mapped;
+            const role = await fetchRole(guild, roleName);
             if (role && member.roles.cache.has(role.id)) {
                 try {
                     await member.roles.remove(role);
