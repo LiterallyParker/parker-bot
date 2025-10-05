@@ -4,6 +4,5 @@ module.exports = {
     messages: require('./messages'),
     reactions: require('./reactions'),
     roles: require('./roles'),
-    setup: require('./setup'),
-    utils: require('./utils'),
+    setup: require('./setup')
 }

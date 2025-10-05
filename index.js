@@ -1,5 +1,4 @@
 require('dotenv').config();
-const { Client, GatewayIntentBits, Partials } = require('discord.js');
 const { client, loadCommands, loadEvents, handleShutdown } = require('./src/bootstrap');
 
 if (!process.env.DISCORD_TOKEN) {

@@ -27,19 +27,31 @@ async function generateSpeech(text) {
         }
     );
 
-    const filePath = path.join(__dirname, `../temp/tts_${Date.now()}.mp3`);
+    // ensure temp dir exists
+    const tempDir = path.join(__dirname, '..', 'temp');
+    try { fs.mkdirSync(tempDir, { recursive: true }); } catch (e) { /* ignore mkdir race errors */ }
+
+    // use a small random suffix to reduce collision risk
+    const fileName = `tts_${Date.now()}_${Math.random().toString(36).slice(2,8)}.mp3`;
+    const filePath = path.join(tempDir, fileName);
     const writeStream = fs.createWriteStream(filePath);
 
     const nodeStream = stream.pipe ? stream : require('stream').Readable.fromWeb(stream);
 
-    await new Promise((resolve, reject) => {
-        nodeStream.pipe(writeStream);
-        nodeStream.on('error', reject);
-        writeStream.on('finish', resolve);
-        writeStream.on('error', reject);
-    });
+    try {
+        await new Promise((resolve, reject) => {
+            nodeStream.pipe(writeStream);
+            nodeStream.on('error', reject);
+            writeStream.on('finish', resolve);
+            writeStream.on('error', reject);
+        });
 
-    return filePath;
+        return filePath;
+    } catch (err) {
+        // cleanup partial file if it exists
+        try { if (fs.existsSync(filePath)) fs.unlinkSync(filePath); } catch (e) { /* ignore cleanup errors */ }
+        throw err;
+    }
 }
 
 module.exports = {
