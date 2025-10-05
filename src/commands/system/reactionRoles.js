@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { reactionRoles } = require('../../config')
+const { reactionRoles } = require('../../../config')
 
 module.exports = {
     data: new SlashCommandBuilder()
