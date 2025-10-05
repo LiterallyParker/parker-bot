@@ -1,5 +1,3 @@
-const { Colors } = require('discord.js')
-
 module.exports = {
     "admin": {
         "id": 1,
@@ -7,7 +5,7 @@ module.exports = {
         "singleChoice": false,
         "roles": {
             "Admin": {
-                "id": "1423820170316611795",
+                "id": 1,
                 "emoji": "🛡️",
                 "color": 15548997,
                 "permissions": [
@@ -15,7 +13,7 @@ module.exports = {
                 ]
             },
             "Moderator": {
-                "id": "1424510133001785375",
+                "id": 2,
                 "emoji": "🔨",
                 "color": 15105570,
                 "permissions": [
@@ -25,7 +23,7 @@ module.exports = {
                 ]
             },
             "Helper": {
-                "id": "1424510134448820295",
+                "id": 3,
                 "emoji": "❓",
                 "color": 16705372,
                 "permissions": [
@@ -40,19 +38,19 @@ module.exports = {
         "singleChoice": true,
         "roles": {
             "He/Him": {
-                "id": "1423803887986413588",
+                "id": 4,
                 "emoji": "👨",
                 "color": 3447003,
                 "permissions": []
             },
             "She/Her": {
-                "id": "1423803890381492315",
+                "id": 5,
                 "emoji": "👩",
                 "color": 15418782,
                 "permissions": []
             },
             "They/Them": {
-                "id": "1423803891723665509",
+                "id": 6,
                 "emoji": "🧑",
                 "color": 15844367,
                 "permissions": []
@@ -65,31 +63,31 @@ module.exports = {
         "singleChoice": false,
         "roles": {
             "Art": {
-                "id": "1423803893560901632",
+                "id": 7,
                 "emoji": "🎨",
                 "color": 15277667,
                 "permissions": []
             },
             "Music": {
-                "id": "1423803894194241589",
+                "id": 8,
                 "emoji": "🎵",
                 "color": 2123412,
                 "permissions": []
             },
             "Gaming": {
-                "id": "1423803895787819129",
+                "id": 9,
                 "emoji": "🎮",
                 "color": 16705372,
                 "permissions": []
             },
             "Programming": {
-                "id": "1423803896488394884",
+                "id": 10,
                 "emoji": "💻",
                 "color": 15548997,
                 "permissions": []
             },
             "Bot User": {
-                "id": "1423815547052626000",
+                "id": 11,
                 "emoji": "🤖",
                 "color": 2895667,
                 "permissions": []
@@ -102,31 +100,31 @@ module.exports = {
         "singleChoice": true,
         "roles": {
             "USA": {
-                "id": "1423803897285316739",
+                "id": 12,
                 "emoji": "🇺🇸",
                 "color": 3447003,
                 "permissions": []
             },
             "Canada": {
-                "id": "1423803898069520504",
+                "id": 13,
                 "emoji": "🇨🇦",
                 "color": 15548997,
                 "permissions": []
             },
             "UK": {
-                "id": "1423803898816368651",
+                "id": 14,
                 "emoji": "🇬🇧",
                 "color": 16777215,
                 "permissions": []
             },
             "Australia": {
-                "id": "1423803899839512648",
+                "id": 15,
                 "emoji": "🇦🇺",
                 "color": 5763719,
                 "permissions": []
             },
             "India": {
-                "id": "1423803900695285770",
+                "id": 16,
                 "emoji": "🇮🇳",
                 "color": 15105570,
                 "permissions": []
