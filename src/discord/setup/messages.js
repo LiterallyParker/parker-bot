@@ -4,7 +4,7 @@ module.exports = async (guild) => {
     console.log('[Setup] Starting messages setup...');
 
     // Prefer a channel named 'role-selection' if available
-    let channel = guild.channels.cache.find(ch => ch.name === 'role-selection' && ch.type === 0);
+    let channel = guild.channels.cache.find(ch => ch.name === 'roles' && ch.type === 0);
 
     // Fallback: first text channel the bot can send to
     if (!channel) {

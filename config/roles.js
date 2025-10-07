@@ -34,8 +34,27 @@ module.exports = {
             }
         }
     },
-    "pronouns": {
+    "community": {
         "id": 2,
+        "memberSelect": false,
+        "singleChoice": false,
+        "roles": {
+            "Member": {
+                "id": 4,
+                "emoji": "✅",
+                "color": 5763719,
+                "permissions": []
+            },
+            "Bot": {
+                "id": "1334587878260342818",
+                "emoji": "🤖",
+                "color": 9807270,
+                "permissions": []
+            }
+        }
+    },
+    "pronouns": {
+        "id": 3,
         "memberSelect": true,
         "singleChoice": true,
         "roles": {
@@ -60,20 +79,26 @@ module.exports = {
         }
     },
     "interests": {
-        "id": 3,
+        "id": 4,
         "memberSelect": true,
         "singleChoice": false,
         "roles": {
-            "Art": {
-                "id": "1423803893560901632",
+            "Drawing": {
+                "id": "1424593659730591804",
                 "emoji": "🎨",
                 "color": 15277667,
                 "permissions": []
             },
             "Music": {
-                "id": "1423803894194241589",
+                "id": "1424593660862922764",
                 "emoji": "🎵",
                 "color": 2123412,
+                "permissions": []
+            },
+            "Writing": {
+                "id": "1424593661894856734",
+                "emoji": "✍️",
+                "color": 10038562,
                 "permissions": []
             },
             "Gaming": {
@@ -87,17 +112,11 @@ module.exports = {
                 "emoji": "💻",
                 "color": 15548997,
                 "permissions": []
-            },
-            "Bot User": {
-                "id": "1423815547052626000",
-                "emoji": "🤖",
-                "color": 2895667,
-                "permissions": []
             }
         }
     },
     "countries": {
-        "id": 4,
+        "id": 5,
         "memberSelect": true,
         "singleChoice": true,
         "roles": {

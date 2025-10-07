@@ -2,50 +2,42 @@ module.exports = {
     "@everyone": {
         allowedChannels: [
             "Information",
-            "Voice",
-            "general",
+            "Getting Started"
         ],
         deniedChannels: [
-            "Bot",
-            "Staff",
-            "art",
-            "music",
-            "gaming",
-            "programming"
+            "Community",
+            "Voice",
+            "Gaming",
+            "Arts",
+            "Programming",
+            "Staff"
         ],
-        defaultAllow: false
-    },
-    "Bot User": {
-        allowedChannels: [
-            "Bot"
-        ],
-        deniedChannels: [],
         defaultAllow: false
     },
     "Programming": {
         allowedChannels: [
-            "programming"
+            "Programming"
         ],
         deniedChannels: [],
         defaultAllow: false
     },
     "Gaming": {
         allowedChannels: [
-            "gaming"
+            "Gaming"
         ],
         deniedChannels: [],
         defaultAllow: false
     },
     "Music": {
         allowedChannels: [
-            "music"
+            "Music"
         ],
         deniedChannels: [],
         defaultAllow: false
     },
-    "Art": {
+    "Drawing": {
         allowedChannels: [
-            "art"
+            "Drawing"
         ],
         deniedChannels: [],
         defaultAllow: false
