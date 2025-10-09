@@ -70,6 +70,9 @@ module.exports = {
             },
             "voice-3": {
                 type: 2
+            },
+            "afk": {
+                type: 2
             }
         },
     },

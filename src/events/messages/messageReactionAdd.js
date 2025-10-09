@@ -1,5 +1,5 @@
 const { Events } = require('discord.js');
-const { reactionRoles } = require('../../../config');
+const { reactionRoles, messagesConfig } = require('../../../config');
 const { assignRole } = require('../../discord/members/roles');
 const { fetchRole } = require('../../discord/roles');
 const { handleSingleChoice } = require('../../discord/reactions');
@@ -17,8 +17,36 @@ module.exports = {
         // Check if the reaction is in the reactionRoles mapping
         const emoji = reaction.emoji.name;
         const guild = reaction.message.guild;
-    const member = await fetchMember(reaction, user);
+        const member = await fetchMember(reaction, user);
 
+        // Check if this message is managed by the bot for reaction roles
+        let isBotManagedMessage = false;
+        let allowedEmojis = [];
+        
+        for (const cat of Object.values(reactionRoles)) {
+            if (cat.messageId && reaction.message.id === cat.messageId) {
+                isBotManagedMessage = true;
+                if (cat.emojis) {
+                    allowedEmojis = Object.keys(cat.emojis);
+                }
+                break;
+            }
+        }
+
+        // If this is a bot-managed message and the emoji is not allowed, remove it
+        if (isBotManagedMessage && !allowedEmojis.includes(emoji) && messagesConfig.settings.removeUnauthorizedReactions) {
+            try {
+                await reaction.users.remove(user.id);
+                if (messagesConfig.settings.logRemovals) {
+                    console.log(`Removed unauthorized reaction ${emoji} from ${user.tag} on bot-managed message`);
+                }
+            } catch (error) {
+                console.error(`Failed to remove unauthorized reaction ${emoji} from ${user.tag}:`, error);
+            }
+            return; // Don't process unauthorized reactions
+        }
+
+        // Process authorized reactions
         for (const cat of Object.values(reactionRoles)) {
             if (cat.messageId && reaction.message.id !== cat.messageId) continue;
 

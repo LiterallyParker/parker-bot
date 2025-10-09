@@ -3,5 +3,6 @@ module.exports = {
     fetchMember: require('./fetchMember'),
     handleMultiChoice: require('./handleMultiChoice'),
     handleSingleChoice: require('./handleSingleChoice'),
-    removeOtherReactions: require('./removeOtherReactions')
+    removeOtherReactions: require('./removeOtherReactions'),
+    protectReactions: require('./protectReactions')
 }

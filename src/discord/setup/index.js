@@ -1,5 +1,11 @@
+const { colorize } = require('../../util/colors');
+
 module.exports = async (guild) => {
-    const runIfFunction = async (modPath, label) => {
+    // Helper to run a setup step with nice console framing
+    const runStep = async (modPath, label, stepNumber) => {
+    const header = `\n===== [SETUP] (${stepNumber}) ${label} - START =====`;
+    const footer = `===== [SETUP] (${stepNumber}) ${label} - COMPLETE =====\n`;
+    console.log(colorize(header, 'cyan'));
         try {
             const mod = require(modPath);
             if (typeof mod === 'function') {
@@ -10,10 +16,12 @@ module.exports = async (guild) => {
         } catch (e) {
             console.error(`${label} setup failed:`, e);
         }
+    console.log(colorize(footer, 'green'));
     };
 
-    await runIfFunction('./roles', 'Roles');
-    await runIfFunction('./channels', 'Channels');
-    await runIfFunction('./permissions', 'Permissions');
-    await runIfFunction('./messages', 'Messages');
+    // Run setup steps with explicit ordering and nicely framed logs
+    await runStep('./roles', 'Role Creation', 1);
+    await runStep('./channels', 'Channel Creation', 2);
+    await runStep('./permissions', 'Permission Assignment', 3);
+    await runStep('./messages', 'Messages Setup', 4);
 };

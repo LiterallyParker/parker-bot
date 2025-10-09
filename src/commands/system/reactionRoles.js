@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { reactionRoles } = require('../../../config')
+const { reactionRoles, messagesConfig } = require('../../../config')
+const { formatRoleSelectionDescription, buildRoleMappings } = require('../../discord/setup/formatters');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -10,21 +11,13 @@ module.exports = {
         await interaction.deferReply({ ephemeral: true });
 
         for (const [key, cat] of Object.entries(reactionRoles)) {
-            // Build description from new cat.roles structure
-            let description = `**React to get a role (${key})**:\n\n`;
+            const description = formatRoleSelectionDescription(key, cat, messagesConfig);
 
             // Populate compatibility mapping: cat.emojis: emoji -> config role id
             // and cat.roleMap: id -> roleName
-            cat.emojis = {};
-            cat.roleMap = {};
-
-            for (const [roleName, meta] of Object.entries(cat.roles)) {
-                const emoji = meta.emoji || '';
-                const cfgId = meta.id;
-                description += `${emoji}  →  ${roleName}\n`;
-                if (emoji && cfgId !== undefined) cat.emojis[emoji] = cfgId;
-                if (cfgId !== undefined) cat.roleMap[cfgId] = roleName;
-            }
+            const { emojis, roleMap } = buildRoleMappings(cat);
+            cat.emojis = emojis;
+            cat.roleMap = roleMap;
 
             const message = await interaction.channel.send({ content: description});
             cat.messageId = message.id;

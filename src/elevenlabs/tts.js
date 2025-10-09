@@ -5,13 +5,13 @@ const { createClient } = require('./client');
 async function textToStream(text) {
     const client = createClient();
     const stream = await client.textToSpeech.convert(
-        'U1Vk2oyatMdYs096Ety7',
+        'XsmrVB66q3D4TaXVaWNF',
         {
             text,
             voiceSettings: {
-                speed: 1,
-                stability: 1,
-                similarityBoost: 1
+                speed: 0.7,
+                stability: 0.5,
+                similarityBoost: 0.5
             },
             modelId: "eleven_multilingual_v2",
             outputFormat: "mp3_44100_128",

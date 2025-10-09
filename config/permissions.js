@@ -10,8 +10,32 @@ module.exports = {
             "Gaming",
             "Arts",
             "Programming",
+            "Staff",
+            "Bot"
+        ],
+        defaultAllow: false
+    },
+    "Moderator": {
+        allowedChannels: [
             "Staff"
         ],
+        deniedChannels: [],
+        defaultAllow: false
+    },
+    "Helper": {
+        allowedChannels: [
+            "Staff"
+        ],
+        deniedChannels: [],
+        defaultAllow: false
+    },
+    "Member": {
+        allowedChannels: [
+            "Community",
+            "Voice",
+            "Bot"
+        ],
+        deniedChannels: [],
         defaultAllow: false
     },
     "Programming": {
