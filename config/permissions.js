@@ -59,9 +59,16 @@ module.exports = {
         deniedChannels: [],
         defaultAllow: false
     },
-    "Drawing": {
+    "Art": {
         allowedChannels: [
-            "Drawing"
+            "Arts"
+        ],
+        deniedChannels: [],
+        defaultAllow: false
+    },
+    "Writing": {
+        allowedChannels: [
+            "Writing"
         ],
         deniedChannels: [],
         defaultAllow: false

@@ -83,7 +83,7 @@ module.exports = {
         "memberSelect": true,
         "singleChoice": false,
         "roles": {
-            "Drawing": {
+            "Art": {
                 "id": "1424593659730591804",
                 "emoji": "🎨",
                 "color": 15277667,

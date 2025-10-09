@@ -56,6 +56,11 @@ module.exports = {
                 type: 0,
                 topic: "Community media",
                 permissionOverwrites: []
+            },
+            "staff-help": {
+                type: 0,
+                topic: "Get help from Staff",
+                permissionOverwrites: []
             }
         }
     },
@@ -103,40 +108,78 @@ module.exports = {
     "Arts": {
         type: 4,
         channels: {
-            "drawing": {
+            "art-chat": {
                 type: 0,
                 topic: "Art chat",
                 permissionOverwrites: []
             },
-            "music": {
+            "art-showcase": {
                 type: 0,
-                topic: "Music chat",
+                topic: "Share your artwork",
                 permissionOverwrites: []
             },
-            "writing": {
+            "art-vc": {
+                type: 2
+            },
+            // art and related channels only
+        }
+    },
+    "Writing": {
+        type: 4,
+        channels: {
+            "writing-chat": {
                 type: 0,
-                topic: "Writing chat",
+                topic: "Writing discussion",
                 permissionOverwrites: []
+            },
+            "writing-showcase": {
+                type: 0,
+                topic: "Share your writing",
+                permissionOverwrites: []
+            },
+            "writing-vc": {
+                type: 2
+            }
+        }
+    },
+    "Music": {
+        type: 4,
+        channels: {
+            "music-chat": {
+                type: 0,
+                topic: "Music discussion",
+                permissionOverwrites: []
+            },
+            "music-showcase": {
+                type: 0,
+                topic: "Share your music",
+                permissionOverwrites: []
+            },
+            "music-vc": {
+                type: 2
             }
         }
     },
     "Programming": {
         type: 4,
         channels: {
-            "projects": {
+            "programming-chat": {
                 type: 0,
-                topic: "Show off your projects",
+                topic: "Programming discussion",
                 permissionOverwrites: []
             },
-            "programming-help": {
+            "programming-showcase": {
                 type: 0,
-                topic: "Get programming help",
+                topic: "Share your projects",
                 permissionOverwrites: []
             },
-            "resources": {
+            "programming-support": {
                 type: 0,
-                topic: "Programming resources",
+                topic: "Programming support and help",
                 permissionOverwrites: []
+            },
+            "programming-vc": {
+                type: 2
             }
         }
     },
