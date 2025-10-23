@@ -34,17 +34,10 @@ const backupPath = `${rolesPath}.bak`;
     // Start Discord client
     const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers] });
     await client.login(BOT_TOKEN);
-    const guild = await client.guilds.fetch(GUILD_ID).catch(() => null);
+    const guild = await client.guilds.fetch(GUILD_ID);
     if (!guild) {
         console.error('Guild not found');
         process.exit(1);
-    }
-
-    // Ensure roles cache is populated
-    try {
-        await guild.roles.fetch();
-    } catch (err) {
-        console.warn('Failed to fetch roles cache (continuing, may still work):', err.message || err);
     }
 
     // Deep copy the config for modification
@@ -53,32 +46,11 @@ const backupPath = `${rolesPath}.bak`;
     for (const [catKey, cat] of Object.entries(newConfig)) {
         for (const [roleName, meta] of Object.entries(cat.roles)) {
             try {
-                // If the config already has an ID and it exists in the guild, prefer it
-                if (meta && meta.id) {
-                    const existing = guild.roles.cache.get(String(meta.id));
-                    if (existing) {
-                        console.log(`Keeping existing id for ${roleName} -> ${meta.id}`);
-                        continue;
-                    }
-                }
-
-                const lookup = (name) => name && String(name).trim().toLowerCase();
-                const wanted = lookup(roleName);
-
-                // Exact (case-insensitive) match first
-                let role = guild.roles.cache.find(r => lookup(r.name) === wanted);
-
-                // Fallback: partial match (contains)
-                if (!role && wanted) {
-                    role = guild.roles.cache.find(r => lookup(r.name) && lookup(r.name).includes(wanted));
-                }
-
+                const role = guild.roles.cache.find(r => r.name === roleName);
                 if (!role) {
                     console.warn(`Role not found in guild: ${roleName} (category ${catKey})`);
-                    console.warn('Available roles:', guild.roles.cache.map(r => r.name).slice(0,200).join(', '));
                     continue;
                 }
-
                 console.log(`Mapping ${roleName} -> ${role.id}`);
                 meta.id = role.id;
             } catch (err) {

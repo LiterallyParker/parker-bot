@@ -9,9 +9,9 @@ async function textToStream(text) {
         {
             text,
             voiceSettings: {
-                speed: 0.7,
-                stability: 0.5,
-                similarityBoost: 0.5
+                speed: 1,
+                stability: 1,
+                similarityBoost: 1
             },
             modelId: "eleven_multilingual_v2",
             outputFormat: "mp3_44100_128",
