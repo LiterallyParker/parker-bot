@@ -41,7 +41,7 @@ module.exports = {
 
         let filePath;
         try {
-            filePath = await generateSpeech(text);
+            filePath = await generateSpeech("Parker bot is here to say: " + text);
 
             const connection = currentAudio ? currentAudio.connection : joinVoiceChannel({
                 channelId: member.voice.channel.id,

@@ -6,13 +6,13 @@
  * reaction-role system functional.
  */
 const { Events } = require('discord.js');
-const { reactionRoles, messagesConfig } = require('../../../config');
+const { reactionRoles, messagesConfig, setupConfig } = require('../../../config');
 const { protectReactions } = require('../../discord/reactions');
 
 module.exports = {
     name: Events.MessageReactionRemoveAll,
     async execute(message) {
-        if (!messagesConfig.settings.protectBotReactions) return;
+        if (!setupConfig.protectBotReactions) return;
 
         // Check if this is a bot-managed message
         for (const [categoryKey, category] of Object.entries(reactionRoles)) {

@@ -1,4 +1,5 @@
 const { Events } = require('discord.js');
+const { messagesConfig } = require('../../../config');
 
 module.exports = {
     name: Events.GuildMemberAdd,
@@ -6,7 +7,7 @@ module.exports = {
     execute(member) {
         const channel = member.guild.systemChannel;
         if (channel?.isTextBased()) {
-            channel.send(`WELCOME TO THE SERVER ${member.user.username.toUpperCase()}!`);
+            channel.send(messagesConfig.welcome.message.replace('_', `${member.username}`));
         }
     }
 };

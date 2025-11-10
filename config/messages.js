@@ -19,16 +19,9 @@
  */
 
 module.exports = {
-    // General settings for reaction management
-    settings: {
-        // Whether to automatically remove unauthorized reactions from bot-managed messages
-        removeUnauthorizedReactions: true,
-        // Whether to log when unauthorized reactions are removed
-        logRemovals: true,
-        // Whether to restore bot reactions if they're manually removed
-        protectBotReactions: true,
-        // Whether to validate and restore reactions on bot startup
-        validateOnStartup: true
+    // Welcome message posted in #welcome channel
+    welcome: {
+        message: "**Everybody welcome _ to the server!**"
     },
 
     // Verification message posted in #introduction for Member role access

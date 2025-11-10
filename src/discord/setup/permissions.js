@@ -9,7 +9,7 @@ module.exports = async (guild) => {
     for (const [roleName, perms] of Object.entries(permissionsConfig)) {
         const role = await fetchRole(guild, roleName);
         if (!role) {
-            console.warn(`(3) Role "${roleName}" not found, skipping.`);
+            console.warn(`Role "${roleName}" not found, skipping.`);
             continue;
         }
 
@@ -18,7 +18,7 @@ module.exports = async (guild) => {
             if (!channel) continue;
 
             await channel.permissionOverwrites.edit(role, { ViewChannel: true, SendMessages: true });
-            console.log(colorize(`(3) Allowed ${roleName} -> ${channelName}`, 'green'));
+            console.log(colorize(`Allowed ${roleName} -> ${channelName}`, 'green'));
         }
 
         for (const channelName of perms.deniedChannels) {
@@ -26,11 +26,8 @@ module.exports = async (guild) => {
             if (!channel) continue;
 
             await channel.permissionOverwrites.edit(role, { ViewChannel: false });
-            console.log(colorize(`(3) Denied ${roleName} -> ${channelName}`, 'yellow'));
+            console.log(colorize(`Denied ${roleName} -> ${channelName}`, 'yellow'));
         }
-
-        console.log(colorize(`(3) Permissions applied for role ${roleName}`, 'cyan'));
     }
 
-    console.log(colorize('(3) Permission assignment finished.', 'cyan'));
 };

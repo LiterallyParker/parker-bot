@@ -2,8 +2,9 @@
  * Messages setup
  *
  * Sets up automated messages for the server including:
- * 1. Verification message in #introduction (react with ✅ to get Member role)
- * 2. Role selection messages in #roles for other categories
+ * 1. Rules message in #rules
+ * 2. Verification message in #introduction (react with ✅ to get Member role)
+ * 3. Role selection messages in #roles for other categories
  *
  * The verification system gates access to the server - @everyone can only see
  * Information and Getting Started categories until they react to get Member role.
@@ -61,7 +62,6 @@ async function setupMessage(channel, content, categoryKey, category, requiredEmo
     let message = await findExistingMessage(channel, content, botId);
     
     if (message) {
-        console.log(`[Setup] Reusing existing message for ${categoryKey} in #${channel.name}`);
         
         // Update the category with the existing message ID (if category exists)
         if (category) {
@@ -142,14 +142,11 @@ const { colorize } = require('../../util/colors');
 
 module.exports = async (guild) => {
     // Step 4: Messages Setup
-    console.log(colorize('(4) Starting messages setup...', 'cyan'));
     const botId = guild.client.user.id;
 
     // First, set up the verification message in the introduction channel
     const introChannel = fetchChannel(guild, 'introduction', 0);
     if (introChannel) {
-        console.log(colorize('(4) Setting up verification message in #introduction...', 'cyan'));
-        
         const verificationConfig = messagesConfig.verification;
         const verificationMessage = `${verificationConfig.title}\n\n${verificationConfig.content}`;
         
@@ -172,18 +169,16 @@ module.exports = async (guild) => {
             );
             
             if (message) {
-                console.log(colorize('(4) Verification message ready in #introduction', 'green'));
+                console.log(colorize('Ensured message in #introduction', 'green'));
             }
         }
     } else {
-        console.warn(colorize('(4) Introduction channel not found, skipping verification message', 'yellow'));
+        console.warn(colorize('Introduction channel not found, skipping verification message', 'yellow'));
     }
 
     // Set up rules message in the rules channel
     const rulesChannel = fetchChannel(guild, 'rules', 0);
     if (rulesChannel) {
-        console.log(colorize('(4) Setting up rules message in #rules...', 'cyan'));
-        
         const rulesContent = formatRulesMessage();
         
         // Rules don't need reactions, so we use setupMessage with empty emojis array
@@ -197,10 +192,10 @@ module.exports = async (guild) => {
         );
         
         if (rulesMessage) {
-            console.log(colorize('(4) Rules message ready in #rules', 'green'));
+            console.log(colorize('Ensured message in #rules', 'green'));
         }
     } else {
-        console.warn(colorize('(4) Rules channel not found, skipping rules message', 'yellow'));
+        console.warn(colorize('Rules channel not found, skipping rules message', 'yellow'));
     }
 
     // Then set up regular role selection messages
@@ -216,7 +211,7 @@ module.exports = async (guild) => {
     }
 
     if (!channel) {
-        console.warn(colorize('(4) No suitable text channel found for posting role selection messages. Skipping messages setup.', 'yellow'));
+        console.warn(colorize('No suitable text channel found for posting role selection messages. Skipping messages setup.', 'yellow'));
         return;
     }
 
@@ -242,9 +237,7 @@ module.exports = async (guild) => {
         );
 
         if (message) {
-            console.log(colorize(`(4) Role selection message ready for category ${key} in #${channel.name}`, 'green'));
+            console.log(colorize(`Ensured message for ${key === 'countries' ? key.replace('ies', 'y') : key.slice(0, -1)} role in #${channel.name}`, 'green'));
         }
     }
-
-    console.log(colorize('(4) Messages setup complete.', 'cyan'));
 };

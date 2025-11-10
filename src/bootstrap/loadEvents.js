@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const { colorize } = require('../util/colors');
 
 module.exports = (client) => {
     const eventsPath = path.join(__dirname, '../events');
@@ -24,5 +25,5 @@ module.exports = (client) => {
         }
     }
 
-    console.log(`Loaded ${totalEvents} event(s)`);
+    console.log(colorize(`Loaded ${totalEvents} events`, 'bright'));
 };

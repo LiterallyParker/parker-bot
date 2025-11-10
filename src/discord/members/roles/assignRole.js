@@ -10,13 +10,11 @@ module.exports = async (member, role) => {
     }
     
     if (member.roles.cache.has(role.id)) {
-        console.log(`[Role Assignment] ${member.user.tag} already has role ${role.name}`);
         return;
     }
     
     try {
         await member.roles.add(role);
-        console.log(`[Role Assignment] Successfully assigned role ${role.name} to ${member.user.tag}`);
     } catch (error) {
         if (error.code === 50013) {
             console.error(`[Role Assignment] Missing permissions to assign role ${role.name} to ${member.user.tag}. Check bot permissions and role hierarchy.`);

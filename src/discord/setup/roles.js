@@ -11,12 +11,10 @@ module.exports = async (guild) => {
         for (const [roleName, roleData] of Object.entries(roles)) {
             try {
                 await createRole(guild, { name: roleName, color: roleData.color, permissions: roleData.permissions });
-                console.log(colorize(`(1) Created role: ${roleName}`, 'green'));
+                console.log(colorize(`Created role: ${roleName}`, 'green'));
             } catch (error) {
-                console.error(colorize(`(1) Failed to create role ${roleName}:`, 'red'), error);
+                console.error(colorize(`Failed to create role ${roleName}:`, 'red'), error);
             }
         }
     }
-
-    console.log(colorize('(1) Role creation finished.', 'cyan'));
 };

@@ -1,5 +1,5 @@
 const { Events } = require('discord.js');
-const { reactionRoles, messagesConfig } = require('../../../config');
+const { reactionRoles, messagesConfig, setupConfig } = require('../../../config');
 
 module.exports = {
     name: Events.MessageReactionRemove,
@@ -31,7 +31,7 @@ module.exports = {
         }
 
         // If this is a bot-managed message and a required emoji was removed, check if bot still has it
-        if (isBotManagedMessage && requiredEmojis.includes(emoji) && messagesConfig.settings.protectBotReactions) {
+        if (isBotManagedMessage && requiredEmojis.includes(emoji) && setupConfig.protectBotReactions) {
             const existingReaction = reaction.message.reactions.cache.get(emoji) || 
                                    reaction.message.reactions.cache.find(r => r.emoji.name === emoji);
             

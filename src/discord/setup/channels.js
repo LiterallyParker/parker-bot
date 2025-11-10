@@ -6,8 +6,8 @@ const { colorize } = require('../../util/colors');
 module.exports = async (guild) => {
     // Step 2: Channel Creation
     for (const [categoryName, categoryData] of Object.entries(channelsConfig)) {
-        const category = await createChannel(guild, { name: categoryName, type: 4 });
-        console.log(colorize(`(2) Ensured category: ${categoryName}`, 'green'));
+        await createChannel(guild, { name: categoryName, type: 4 });
+        console.log(colorize(`Ensured category: ${categoryName}`, 'green'));
 
         for (const [channelName, channelData] of Object.entries(categoryData.channels)) {
             // Process permission overwrites to resolve @everyone to guild ID
@@ -26,9 +26,8 @@ module.exports = async (guild) => {
                 permissionOverwrites,
                 reason: 'Initial Server Setup'
             });
-            console.log(colorize(`(2) Created/Ensured channel: ${channelName} (parent: ${categoryName})`, 'green'));
+            console.log(colorize(`Ensured channel: ${channelName} (parent: ${categoryName})`, 'green'));
         }
     }
 
-    console.log(colorize('(2) Channel creation finished.', 'cyan'));
 };

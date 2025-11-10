@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const { Collection } = require('discord.js');
+const { colorize } = require('../util/colors');
 
 module.exports = (client) => {
     client.commands = new Collection();
@@ -30,5 +31,5 @@ module.exports = (client) => {
     };
 
     loadFolder(commandsPath);
-    console.log(`Loaded ${client.commands.size} commands.`);
+    console.log(colorize(`Loaded ${client.commands.size} commands.`, 'bright'));
 };
