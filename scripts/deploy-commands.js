@@ -11,10 +11,10 @@ if (!process.env.DISCORD_TOKEN || !process.env.CLIENT_ID || !process.env.GUILD_I
 
 const commands = [];
 // commands are stored under src/commands in this repo
-const commandFolders = fs.readdirSync(path.join(__dirname, 'src', 'commands'));
+const commandFolders = fs.readdirSync(path.join(__dirname, '..', 'src', 'commands'));
 
 for (const folder of commandFolders) {
-    const folderPath = path.join(__dirname, 'src', 'commands', folder);
+    const folderPath = path.join(__dirname, '..', 'src', 'commands', folder);
     if (!fs.statSync(folderPath).isDirectory()) continue;
 
     const commandFiles = fs.readdirSync(folderPath).filter(file => file.endsWith('.js'));
